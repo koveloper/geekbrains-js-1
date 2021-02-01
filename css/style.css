@@ -1,0 +1,61 @@
+@font-face {
+  font-family: '_ubuntu_';
+  src: url('../fonts/ubuntu_light.woff2?v=1_0') format('woff2');
+  font-weight: 300;
+}
+@font-face {
+  font-family: '_ubuntu_';
+  src: url('../fonts/ubuntu_regular.woff2?v=1_0') format('woff2');
+  font-weight: 400;
+}
+@font-face {
+  font-family: '_ubuntu_';
+  src: url('../fonts/ubuntu_medium.woff2?v=1_0') format('woff2');
+  font-weight: 500;
+}
+@font-face {
+  font-family: '_ubuntu_';
+  src: url('../fonts/ubuntu_bold.woff2?v=1_0') format('woff2');
+  font-weight: 700;
+}
+body {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-color: darkgray;
+  font-family: '_ubuntu_';
+}
+.container {
+  max-width: 1200px;
+  width: 100%;
+  height: 100%;
+  margin: 20px auto;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: white;
+  border-radius: 20px;
+}
+.main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.specials {
+  font-weight: bold;
+}
+.lesson {
+  padding: 0;
+  margin: 0;
+}
+.lesson-header {
+  text-align: center;
+  margin: 0;
+  padding: 20px 0;
+}
+.lesson-content {
+  text-align: justify;
+  line-height: 150%;
+}

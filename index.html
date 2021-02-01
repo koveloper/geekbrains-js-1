@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS level-1. Homerwork</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header"></header>
+        <main class="main">
+            <section class="lesson">
+                <h2 class="lesson-header">ДЗ-1</h2>
+                <p class="lesson-content">
+                    Атрибуты <span class="specials">async</span> и&nbsp;<span class="specials">defer</span> применяются для распараллеливания загрузки ресурсов сайта. Конкретно для запуска механизма загрузки скриптов параллельно загрузке <span class="specials">DOM</span>.
+                    В&nbsp;классическом варианте <span class="specials">DOM</span> не&nbsp;отобразится пока не&nbsp;будут загружены все скрипты, при этом <span class="specials">DOM</span> будет загружаться последовательно и&nbsp;дойдя до&nbsp;строчки
+                    с&nbsp;указанием внешнего скрипта перейдёт к&nbsp;его загрузке и&nbsp;после его загрузки продолжин загружать <span class="specials">DOM</span>, при этом скрипту не&nbsp;будут доступны элементы <span class="specials">DOM</span> расположенные
+                    ниже него (пока эти элементы не&nbsp;прогрузятся). В&nbsp;настоящий момент скрипты могут быть очень большими и&nbsp;это вызывает большие задержки отображения <span class="specials">DOM</span> у&nbsp;пользователя. Атрибуты <span class="specials">async</span>                    и&nbsp;<span class="specials">defer</span> вносят дополнительные карты в&nbsp;колоду WEB разработчиков. Если указать в&nbsp;теге script аттрибут <span class="specials">async</span> браузер будет загружать данный скрипт параллельно
+                    <span class="specials">DOM</span>, но&nbsp;исполнит скрипт только после полной загрузки <span class="specials">DOM</span> + до&nbsp;события <span class="specials">DOMContentLoaded</span>. При этом скрипты обозначенные defer будут исполняться
+                    в&nbsp;той последовательности в&nbsp;которой они описаны в&nbsp;<span class="specials">DOM</span>&nbsp;&mdash; скрипты могут загрузиться раньше <span class="specials">DOM</span> и&nbsp;в&nbsp;разном порядке, но&nbsp;будут исполнены
+                    после полной загрузки <span class="specials">DOM</span> и&nbsp;в&nbsp;той последовательности в&nbsp;которой они определены в&nbsp;<span class="specials">DOM</span>. Аттрибут <span class="specials">async</span> применяется если скрипт
+                    является полностью автономным и&nbsp;независимым от&nbsp;<span class="specials">DOM</span>&nbsp;&mdash; загрузится и&nbsp;исполнится в&nbsp;неизвестной последовательности, очерёдность загрузки и&nbsp;исполнения для скриптов помеченных
+                    аттрибутом <span class="specials">async</span> не&nbsp;соблюдается.
+                </p>
+            </section>
+        </main>
+    </div>
+    <script defer src="js/main.js"></script>
+</body>
+
+</html>
