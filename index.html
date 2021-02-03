@@ -86,6 +86,57 @@
 
                 <button class="lesson-script-run" onclick="lesson_2()">Запустить скрипт домашнего задания</button>
             </section>
+            <section class="lesson">
+                <h2 class="lesson-header">ДЗ-3</h2>
+
+                <div class="lesson-task">
+                    <div class="lesson-task-question">
+                        С помощью цикла while вывести все простые числа в промежутке от 0 до 100.
+                    </div>
+                    <div class="lesson-task-answers">
+                        <button class="lesson-script-run" onclick="document.getElementById('lesson-3-task-1-answer').innerHTML = pretifyJsFunc(lesson_3().task_1, {start: 0, end: 100});">Запустить скрипт</button>
+                        <p class="lesson-task-answer" id="lesson-3-task-1-answer">
+                        </p>
+                    </div>
+                </div>
+                <div class="lesson-task">
+                    <div class="lesson-task-question">
+                        Товары в корзине хранятся в массиве. Задачи:<br>
+                        a. Организовать такой массив для хранения товаров в корзине;<br>
+                        b. Организовать функцию countBasketPrice , которая будет считать стоимость корзины.
+                    </div>
+                    <div class="lesson-task-answers">
+                        <button class="lesson-script-run" onclick="document.getElementById('lesson-3-task-2-3-answer').innerHTML = pretifyJsFunc(lesson_3().task_2_3)">Запустить скрипт</button>
+                        <p class="lesson-task-answer" id="lesson-3-task-2-3-answer">
+                        </p>
+                    </div>
+                </div>
+                <div class="lesson-task">
+                    <div class="lesson-task-question">
+                        Вывести с помощью цикла for числа от 0 до 9, не используя тело цикла.
+                    </div>
+                    <div class="lesson-task-answers">
+                        <button class="lesson-script-run" onclick="document.getElementById('lesson-3-task-4-answer').innerHTML = pretifyJsFunc(lesson_3().task_4);">Запустить скрипт</button>
+                        <p class="lesson-task-answer" id="lesson-3-task-4-answer">
+                        </p>
+                    </div>
+                </div>
+                <div class="lesson-task">
+                    <div class="lesson-task-question">
+                        Нарисовать пирамиду с 20 рядами с помощью console.log , как показано на ниже:<br>
+                        x<br>
+                        xx<br>
+                        xxx<br>
+                        xxxx<br>
+                        xxxxx<br>
+                    </div>
+                    <div class="lesson-task-answers">
+                        <button class="lesson-script-run" onclick="document.getElementById('lesson-3-task-5-answer').innerHTML = pretifyJsFunc(lesson_3().task_5).replaceAll('\r\n', '<br>'); console.log(lesson_3().task_5())">Запустить скрипт</button>
+                        <p class="lesson-task-answer" id="lesson-3-task-5-answer">
+                        </p>
+                    </div>
+                </div>                
+            </section>
         </main>
     </div>
     <script defer src="js/main.js"></script>
