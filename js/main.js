@@ -156,19 +156,116 @@ function lesson_3() {
     }
 }
 
-function pretifyJsFunc(func, args) {
-    if(typeof func != "function") {
-        return '';
+function lesson_4() {
+    let task_1 = (num) => {
+        if(num === undefined) {
+            while(!num) {
+                num = Math.floor(Math.random() * Math.pow(10, Math.floor(Math.random() * 10)));
+            }        
+        }
+        let name = "";
+        let obj_ = {
+            _num: num,
+            toString: baseToStringFunc
+        };
+        while(num) {
+            name = name.length ? (name + "0") : "1";
+            obj_["_" + name] = num % 10;
+            num = Math.floor(num / 10); 
+        }
+        console.log(obj_);
+        return obj_;
     }
+    return {
+        task_1
+    }
+}
+
+/**
+ * COMMON USED OBJECTS
+ */
+function CartItem({product = {}, user = {}, purchase = {}} = {}) {
+    if(this != window) {
+        this.product = {
+            name: "",
+            title: "",
+            description: "",
+            price: 0,
+        };
+        this.user = {
+            account: "",
+            name: "",
+            phone: "",
+            email: "",
+            address: "",
+        };
+        this.purchase = {
+            quantity: 1,
+            paymentType: "",
+            deliveryAddress: ""
+        };
+        move_ = (dst, src) => {
+            for(let k in src) {
+                if(k in dst) {
+                    dst[k] = src[k];
+                }
+            }
+        }
+        this.toString = baseToStringFunc;
+        console.log(arguments);
+        console.log(this);
+        for(let k in this) {
+            if(typeof(this[k]) != "function") {
+                this[k].toString = baseToStringFunc;
+                if(arguments && arguments.length && arguments[0] && k in arguments[0]) {
+                    move_(this[k], arguments[0][k]);
+                }            
+            }
+        }
+    }
+}
+
+function fillCart() {
+    return [
+        new CartItem({product: {name: "bread", price: 19}, purchase: {quantity: 3}}),
+        new CartItem({product: {name: "potato", price: 39}, purchase: {quantity: 5}}),
+        new CartItem({product: {name: "butter", price: 120}, purchase: {quantity: 1}}),
+    ];
+}
+
+let cart = fillCart();
+/**
+ * COMMON USED FUNCTIONS
+ */
+function calculateCart(cartItems) {
+    return cartItems.reduce((acc, el) => {
+        return acc + (el.purchase.quantity * el.product.price);
+    }, 0);
+}
+
+function baseToStringFunc() {
+    let str_ = "";
+    for(let k in this) {
+        if(k != "_num" && typeof(this[k]) != "function") {
+            str_ += (str_.length ? ", " : "") + k + ": " + this[k];
+        }
+    }
+    return this._num + " = {" + str_ + "}"
+}
+
+function pretifyJsFunc(func, args, outResult = true) {
     let code = '' + func;
     let html = "<div style='display: flex; flex-direction: column;'>";
+    html += "<span style='margin: 8px 0; border: 1px solid gray'></span>";
     let marginStep = 16;
     let margin = 0;
     function wrap(line, margin) {
         line = line.replaceAll("function", "<span style='color: blue'>function</span>");
         line = line.replaceAll("let ", "<span style='color: blue'>let </span>");
+        line = line.replaceAll("new ", "<span style='color: blue'>new </span>");
         line = line.replaceAll("for", "<span style='color: magenta'>for</span>");
         line = line.replaceAll("if", "<span style='color: magenta'>if</span>");
+        line = line.replaceAll("while", "<span style='color: magenta'>while</span>");
         line = line.replaceAll("return", "<span style='color: brown'>return</span>");
         line = line.replaceAll("true", "<span style='color: cornflowerblue'>true</span>");
         line = line.replaceAll("false", "<span style='color: cornflowerblue'>false</span>");
@@ -185,20 +282,36 @@ function pretifyJsFunc(func, args) {
 
     for(let line of code.split("\r\n")) {
         if(line.includes("}")) {
-            margin -= marginStep * line.split("}") .length;
+            margin -= marginStep * calc(line, '}');
             if(calc(line, '{') == calc(line, '}')) {
-                margin += marginStep * line.split("{}") .length;                
+                margin += marginStep * calc(line, '{');                
+            }
+        }
+        if(line.includes("]")) {
+            margin -= marginStep * calc(line, ']');
+            if(calc(line, '[') == calc(line, ']')) {
+                margin += marginStep * calc(line, '[');                
             }
         }
         html += wrap(line, margin < 0 ? 0 : margin);
         if(line.includes("{")) {
-            margin += marginStep * line.split("{") .length;
+            margin += marginStep * calc(line, '{');
             if(calc(line, '{') == calc(line, '}')) {
-                margin -= marginStep * line.split("{}") .length;                
+                margin -= marginStep * calc(line, '}');                
             }
+        }
+        if(line.includes("[")) {
+            margin += marginStep * calc(line, '[');
+            if(calc(line, '[') == calc(line, ']')) {
+                margin -= marginStep * calc(line, ']');                
+            }
+        }
+    }
+    if(outResult) {
+        html += "<span style='margin: 8px 0; border: 1px solid gray'></span>";
+        if(typeof func == "function") {
+            html += `<span style="font-weight: 600; color: green">${func(args)}</span>`;
         }        
     }
-    html += "<span style='margin: 8px 0; border: 1px solid gray'></span>";
-    html += `<span style="font-weight: 600; color: green">${func(args)}</span>`
     return html + "</div>";
 }
