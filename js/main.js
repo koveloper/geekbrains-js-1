@@ -212,7 +212,7 @@ function lesson_5() {
             }
             chessField.append(chessRow);
         }
-        return chessField.innerHTML;
+        return chessField.outerHTML;
     }
     let task_2 = () => {
         let buyClickCallback = (product) => {
