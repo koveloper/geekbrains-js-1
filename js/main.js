@@ -254,7 +254,8 @@ function Magazine() {
         let footer = document.createElement("div");
         footer.setAttribute("style", defStyles + "padding: 0 8px; color: lightgray");
         footer.textContent = price + " р.";
-        let buy = document.createElement("button");
+        // let buy = document.createElement("button");
+        let buy = document.createElement("div");
         buy.setAttribute("style", "width: 100%; margin: 8px 0 0 0;");
         buy.textContent = "Купить";
         buy.classList.add("action-button");
@@ -262,7 +263,10 @@ function Magazine() {
         domElement.appendChild(image);
         domElement.appendChild(footer);
         domElement.appendChild(buy);
-        buy.setAttribute("onclick", `market.cart.add(${id})`);
+        buy.onclick = function() {
+            market.cart.add(id);
+        }
+        // buy.setAttribute("onclick", `market.cart.add(${id})`);
         this.getDomElement = function() {
             return domElement;
         }
