@@ -254,8 +254,7 @@ function Magazine() {
         let footer = document.createElement("div");
         footer.setAttribute("style", defStyles + "padding: 0 8px; color: lightgray");
         footer.textContent = price + " р.";
-        // let buy = document.createElement("button");
-        let buy = document.createElement("div");
+        let buy = document.createElement("button");
         buy.setAttribute("style", "width: 100%; margin: 8px 0 0 0;");
         buy.textContent = "Купить";
         buy.classList.add("action-button");
