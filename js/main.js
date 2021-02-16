@@ -181,68 +181,178 @@ function lesson_4() {
     }
 }
 
-/**
- * COMMON USED OBJECTS
- */
-function CartItem({product = {}, user = {}, purchase = {}} = {}) {
-    if(this != window) {
-        this.product = {
-            name: "",
-            title: "",
-            description: "",
-            price: 0,
-        };
-        this.user = {
-            account: "",
-            name: "",
-            phone: "",
-            email: "",
-            address: "",
-        };
-        this.purchase = {
-            quantity: 1,
-            paymentType: "",
-            deliveryAddress: ""
-        };
-        move_ = (dst, src) => {
-            for(let k in src) {
-                if(k in dst) {
-                    dst[k] = src[k];
+function lesson_5() {
+    let task_1 = () => {
+        let chessField = document.createElement("div");
+        let commonStyles = "display: flex; justify-content: center; align-items: center;"
+        let itemSizes = "width: 32px; height: 32px;"
+        chessField.setAttribute("style", commonStyles +  "flex-direction: column;");
+        for(let row = 0; row < 10; row++) {
+            let chessRow = document.createElement("div");
+            chessRow.setAttribute("style", commonStyles);
+            for(let col = 0; col < 10; col++) {
+                let chessItem = document.createElement("div");
+                if(row == 0 || row == 9) {
+                    chessItem.setAttribute("style", commonStyles + itemSizes);
+                    if(col != 0 && col != 9) {
+                        chessItem.textContent = String.fromCharCode(0x41 + (col - 1));
+                    }                    
+                } else {
+                    chessItem.setAttribute("style", 
+                            commonStyles 
+                            + itemSizes 
+                            + ((col != 0 && col != 9) ? "border: 1px solid black; box-sizing: border-box;" : "")
+                            + ((col != 0 && col != 9) ? ("background: " + (((row + col) % 2) ? "black;" : "bisque;")) : "")
+                    );
+                    if(col == 0 || col == 9) {
+                        chessItem.textContent = row;
+                    }
                 }
+                chessRow.appendChild(chessItem);
             }
+            chessField.append(chessRow);
         }
-        this.toString = baseToStringFunc;
-        console.log(arguments);
-        console.log(this);
-        for(let k in this) {
-            if(typeof(this[k]) != "function") {
-                this[k].toString = baseToStringFunc;
-                if(arguments && arguments.length && arguments[0] && k in arguments[0]) {
-                    move_(this[k], arguments[0][k]);
-                }            
-            }
+        return chessField.outerHTML;
+    }
+    let task_2 = () => {
+        let buyClickCallback = (product) => {
+            console.log(product);
+        };
+        
+        let products = document.createElement("div");
+        products.setAttribute("style", "display: flex; align-items: center; justify-content: center");
+        for(let p of market.products) {
+            products.appendChild(p.getDomElement());
         }
+        return products.outerHTML + market.cart.getDomElement().outerHTML;
+    }
+    return {
+        task_1,
+        task_2
     }
 }
 
-function fillCart() {
-    return [
-        new CartItem({product: {name: "bread", price: 19}, purchase: {quantity: 3}}),
-        new CartItem({product: {name: "potato", price: 39}, purchase: {quantity: 5}}),
-        new CartItem({product: {name: "butter", price: 120}, purchase: {quantity: 1}}),
+/**
+ * COMMON USED OBJECTS
+ */
+function Magazine() {
+
+    function Product(id, title, price, imageURL) {
+        this.id = id;
+        this.title = title;
+        this.price = price;
+        this.imageURL = imageURL;
+        
+        let defStyles = "display: flex; align-items: center; justify-content: center;";
+        let domElement = document.createElement("div");
+        domElement.setAttribute("style", "min-width: 80px; border: 1px solid gray; border-radius: 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 5px;");
+        let header = document.createElement("div");
+        header.setAttribute("style", defStyles + "padding: 0 8px; color: black");
+        header.textContent = title;
+        let image = document.createElement("div");
+        image.setAttribute("style", defStyles + "padding: 0 8px");
+        let footer = document.createElement("div");
+        footer.setAttribute("style", defStyles + "padding: 0 8px; color: lightgray");
+        footer.textContent = price + " р.";
+        let buy = document.createElement("button");
+        buy.setAttribute("style", "width: 100%; margin: 8px 0 0 0;");
+        buy.textContent = "Купить";
+        buy.classList.add("action-button");
+        domElement.appendChild(header);
+        domElement.appendChild(image);
+        domElement.appendChild(footer);
+        domElement.appendChild(buy);
+        buy.setAttribute("onclick", `market.cart.add(${id})`);
+        this.getDomElement = function() {
+            return domElement;
+        }
+    }
+
+    function CartItem(productId) {
+        let quantity_ = 1;
+        this.productId = productId;
+        this.setQuantity = function(value) {
+            quantity_ = value;
+            return this;
+        }
+        this.getQuantity = function() {
+            return quantity_;
+        }        
+    }
+
+    function Cart() {
+        let items_ = new Map();
+        //HTML
+        let defStyles = "display: flex; align-items: center; justify-content: center;";
+        let domElement = document.createElement("div");
+        domElement.setAttribute("style", "min-width: 200px; border: 1px solid gray; border-radius: 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 5px;");
+        let header = document.createElement("div");
+        header.setAttribute("style", defStyles + "padding: 0 8px; color: black");
+        header.textContent = "Состояние корзины";
+        let count = document.createElement("div");
+        count.setAttribute("style", defStyles + "color: gray; font-size: 32px; margin: 20px");
+        count.setAttribute("id", "cart-count");
+        count.textContent = "пусто";
+        let footer = document.createElement("div");
+        footer.setAttribute("style", defStyles + "padding: 0 8px; color: lightgray");
+        footer.setAttribute("id", "cart-cost");
+        domElement.appendChild(header);
+        domElement.appendChild(count);
+        domElement.appendChild(footer);
+        
+        this.add = function(productId, count = 1) {
+            if(items_.has(productId)) {
+                items_.get(productId).setQuantity(items_.get(productId).getQuantity() + count);
+            } else {
+                items_.set(productId, new CartItem(productId).setQuantity(count));
+            }
+            document.querySelector("#cart-count").textContent = "товаров: " + this.getItemsCount();
+            document.querySelector("#cart-cost").textContent = "общая сумма: " + this.getCost() + " р.";
+        }
+        this.getItemsCount = function() {
+            return [...items_.values()].reduce((acc, el) => {
+                return acc + el.getQuantity();
+            }, 0);
+        };
+        this.getCost = function() {
+            return [...items_.values()].reduce((acc, el) => {
+                let prod;
+                for (let p of products) {
+                    if(p.id == el.productId) {
+                        prod = p;
+                        break;
+                    }
+                }
+                return acc + (el.getQuantity() * prod.price);
+            }, 0);
+        }
+        this.getDomElement = function() {
+            return domElement;
+        }
+    }
+
+    let products = [
+        new Product("1", "Хлеб", "55", ""),
+        new Product("2", "Масло", "160", ""),
+        new Product("3", "Молоко", "75", ""),
+        new Product("4", "Яблочный сок", "120", ""),
+        new Product("5", "Печенье овсяное", "68", ""),
     ];
+
+    let cart = new Cart();
+
+    return {
+        products,
+        cart
+    }
 }
 
-let cart = fillCart();
+let market = new Magazine();
+
+
 /**
  * COMMON USED FUNCTIONS
  */
-function calculateCart(cartItems) {
-    return cartItems.reduce((acc, el) => {
-        return acc + (el.purchase.quantity * el.product.price);
-    }, 0);
-}
-
 function baseToStringFunc() {
     let str_ = "";
     for(let k in this) {
@@ -265,6 +375,7 @@ function pretifyJsFunc(func, args, outResult = true) {
         line = line.replaceAll("new ", "<span style='color: blue'>new </span>");
         line = line.replaceAll("for", "<span style='color: magenta'>for</span>");
         line = line.replaceAll("if", "<span style='color: magenta'>if</span>");
+        line = line.replaceAll("else", "<span style='color: magenta'>else</span>");
         line = line.replaceAll("while", "<span style='color: magenta'>while</span>");
         line = line.replaceAll("return", "<span style='color: brown'>return</span>");
         line = line.replaceAll("true", "<span style='color: cornflowerblue'>true</span>");
@@ -310,7 +421,7 @@ function pretifyJsFunc(func, args, outResult = true) {
     if(outResult) {
         html += "<span style='margin: 8px 0; border: 1px solid gray'></span>";
         if(typeof func == "function") {
-            html += `<span style="font-weight: 600; color: green">${func(args)}</span>`;
+            html += `<div style="font-weight: 600; color: green">${func(args)}</div>`;
         }        
     }
     return html + "</div>";
