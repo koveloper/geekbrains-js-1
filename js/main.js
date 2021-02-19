@@ -4,7 +4,14 @@ function task() {
     for(let p of market.products) {
         products.appendChild(p.getDomElement());
     }
-    return products.outerHTML + market.cart.getDomElement().outerHTML;
+    document.querySelector("#task-answer").append(products);
+    document.querySelector("#task-answer").append(market.cart.getDomElement());
+}
+
+function init() {
+    for(let p of market.products) {
+        p.init();
+    }
 }
 
 /**
@@ -21,6 +28,7 @@ function Magazine() {
         let defStyles = "display: flex; align-items: center; justify-content: center;";
         let domElement = document.createElement("div");
         domElement.classList.add("product");
+        domElement.setAttribute("id", "product-" + id);
         let header = document.createElement("div");
         header.setAttribute("style", defStyles + "padding: 0 8px; color: black");
         header.textContent = title;
@@ -38,8 +46,9 @@ function Magazine() {
         domElement.appendChild(image);
         domElement.appendChild(footer);
         domElement.appendChild(buy);
-        buy.setAttribute("onclick", `market.cart.add(${id})`);
-
+        buy.onclick = () => {
+            market.cart.add(id);
+        }
         this.getDomElement = function() {
             return domElement;
         }
