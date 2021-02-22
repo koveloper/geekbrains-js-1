@@ -71,18 +71,29 @@ body {
   padding: 0;
   background-color: darkgray;
   font-family: '_ubuntu_';
+  display: flex;
+  flex-direction: column;
 }
 .container {
   max-width: 1400px;
   width: 100%;
   height: 100%;
+  flex-grow: 1;
   margin: 20px auto;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .main {
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 .specials {
   font-weight: bold;
@@ -94,7 +105,7 @@ body {
   border-radius: 20px;
   padding: 20px;
   box-sizing: border-box;
-  margin: 20px 0 0 0;
+  margin: auto auto;
 }
 .lesson:first-child {
   margin: 0;
@@ -178,24 +189,52 @@ body {
 .product-image:hover {
   opacity: 0.7;
 }
-.product-modal {
+.uni-modal {
   width: 70%;
   height: 70%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.product-modal-wrapper {
+.uni-modal-wrapper {
   transition: 0.5s;
   position: fixed;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(0, 0, 0, 0.6);
   overflow: hidden;
   max-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.cart {
+  width: 100px;
+  height: 100px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 4px;
+  box-sizing: border-box;
+  border-top-left-radius: 66.66666667px;
+  overflow: hidden;
+  max-width: 0;
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: 1s;
+  cursor: pointer;
+}
+.cart:hover {
+  -webkit-box-shadow: 0px 0px 23px 0px #ffffff;
+  -moz-box-shadow: 0px 0px 23px 0px #ffffff;
+  box-shadow: 0px 0px 23px 0px #ffffff;
+  background: bisque;
 }
