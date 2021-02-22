@@ -73,7 +73,7 @@ body {
   font-family: '_ubuntu_';
 }
 .container {
-  max-width: 1200px;
+  max-width: 1400px;
   width: 100%;
   height: 100%;
   margin: 20px auto;
@@ -152,4 +152,50 @@ body {
 }
 .action-button:active {
   color: black;
+}
+.product {
+  min-width: 80px;
+  border: 1px solid gray;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 5px;
+}
+.product-image {
+  margin: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  width: 128px;
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+}
+.product-image:hover {
+  opacity: 0.7;
+}
+.product-modal {
+  width: 70%;
+  height: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.product-modal-wrapper {
+  transition: 0.5s;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.6);
+  overflow: hidden;
+  max-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
